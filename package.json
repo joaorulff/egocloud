@@ -1,0 +1,33 @@
+{
+  "name": "egocloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --config ./webpack/webpack.config.js",
+    "build": "webpack --config ./webpack/webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaorulff/egocloud.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaorulff/egocloud/issues"
+  },
+  "homepage": "https://github.com/joaorulff/egocloud#readme",
+  "devDependencies": {
+    "@types/three": "^0.150.2",
+    "html-webpack-plugin": "^5.5.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.80.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "three": "^0.151.3"
+  }
+}
