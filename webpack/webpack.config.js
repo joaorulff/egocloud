@@ -2,10 +2,13 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    
     mode: 'development',
+    
     entry: {
         bundle: path.resolve(__dirname, '../src/index.ts')
     },
+
     module: {
         rules: [
             {
@@ -15,6 +18,7 @@ module.exports = {
             }
         ]
     },
+    
     plugins: [ new HtmlWebpackPlugin(
         {
             title: 'EgoCloud',
@@ -22,13 +26,16 @@ module.exports = {
             template: path.resolve(__dirname, '../src/template.html')
         }
     )],
+    
     resolve: {
         extensions: ['.ts', '.js']
     },
+    
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].[contenthash].js' 
     },
+    
     devServer: {
         static: {
             directory: path.resolve(__dirname, '../dist')

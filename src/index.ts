@@ -1,4 +1,6 @@
-import { EgoCloud } from './egocloud';
+import { SceneViewer } from './SceneViewer';
+
 
 // Testing...
-const egoCloud = new EgoCloud();
+const mainDiv: HTMLElement | null = document.getElementById('main-div');
+// const egoCloud = new SceneViewer();
