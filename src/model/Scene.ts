@@ -1,5 +1,7 @@
 // third-party
 import * as THREE from 'three';
+import { SceneManager } from '../SceneManager';
+import { Dataset } from './Dataset';
 
 export class Scene {
 
@@ -10,7 +12,13 @@ export class Scene {
     public camera!: THREE.PerspectiveCamera;
     public scene!: THREE.Scene;
     public renderer!: THREE.WebGLRenderer;
-    
+
+    // dataset
+    public dataset!: Dataset;
+
+    // manager
+    public sceneManager: SceneManager;
+
     constructor( containerRef: HTMLElement ){
 
         // saving container ref
@@ -18,7 +26,7 @@ export class Scene {
         const [containerWidth, containerHeight] = [this.container.offsetWidth, this.container.offsetHeight];
 
         // initializing camera
-        this.initialize_camera( containerWidth, containerHeight, [0,0,0] );
+        this.initialize_camera( containerWidth, containerHeight, [0,0,10] );
 
         // initializing scene
         this.initialize_scene();
@@ -26,14 +34,8 @@ export class Scene {
         // initialize renderer
         this.initialize_renderer( containerWidth, containerHeight );
 
-    }
-
-    public render() {
-
-        requestAnimationFrame( () => this.render() );
-
-        // rendering
-        this.renderer.render( this.scene, this.camera );
+        // initializing scene manager
+        this.sceneManager = new SceneManager( this.scene );
 
     }
 
@@ -42,9 +44,8 @@ export class Scene {
         while (this.scene.children.length){
             this.scene.remove(this.scene.children[0]);
         }  
-    }
 
-    // *********************** PRIVATE METHODS *********************** //
+    }
 
     private initialize_scene(): void {
 
@@ -54,6 +55,17 @@ export class Scene {
 
         // saving scene ref
         this.scene = scene;
+
+    }
+
+    public show( dataset: Dataset ) {
+
+        // saving current dataset
+        this.dataset = dataset;
+
+        this.sceneManager.add_dataset_to_scene( this.dataset );
+
+        this.render();
 
     }
 
@@ -83,6 +95,15 @@ export class Scene {
 
         // saving ref
         this.renderer = renderer;
+
+    }
+
+    private render(): void {
+
+        requestAnimationFrame( () => this.render() );
+
+        // rendering
+        this.renderer.render( this.scene, this.camera );
 
     }
 

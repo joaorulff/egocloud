@@ -1,4 +1,5 @@
 // model
+import { Dataset } from './model/Dataset';
 import { Scene } from './model/Scene';
 
 export class SceneViewer {
@@ -20,6 +21,10 @@ export class SceneViewer {
 
     }
 
-    render( dataset: any ){}
+    render( dataset: Dataset ){
+
+        this.scene.show( dataset );
+
+    }
 
 }
