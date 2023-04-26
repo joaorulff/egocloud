@@ -11,9 +11,7 @@ export class Scene {
     public scene!: THREE.Scene;
     public renderer!: THREE.WebGLRenderer;
     
-    constructor(){}
-
-    public init( containerRef: HTMLElement, tooltipContainerRef: HTMLElement  ): void {
+    constructor( containerRef: HTMLElement ){
 
         // saving container ref
         this.container = containerRef;
@@ -53,9 +51,6 @@ export class Scene {
         const scene: THREE.Scene = new THREE.Scene();
         scene.background = new THREE.Color( 'white' );
         scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
-
-        // const axesHelper: THREE.AxesHelper = new THREE.AxesHelper( 5 );
-        // scene.add( axesHelper );
 
         // saving scene ref
         this.scene = scene;
