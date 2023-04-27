@@ -4,9 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     
     mode: 'development',
-    
+
     entry: {
-        bundle: path.resolve(__dirname, '../src/index.ts')
+        egocloud: path.resolve(__dirname, '../demo/index.ts')
     },
 
     module: {
@@ -23,7 +23,7 @@ module.exports = {
         {
             title: 'EgoCloud',
             filename: 'index.html',
-            template: path.resolve(__dirname, '../src/template.html')
+            template: path.resolve(__dirname, '../demo/index.html')
         }
     )],
     
@@ -32,14 +32,16 @@ module.exports = {
     },
     
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: '[name].[contenthash].js' 
+        path: path.resolve(__dirname, '../demo/dist'),
+        filename: '[name].js' 
     },
     
     devServer: {
+
         static: {
-            directory: path.resolve(__dirname, '../dist')
+            directory: path.resolve(__dirname, '../demo/dist')
         },
+
         port: 3000,
         open: true,
         hot: true,
