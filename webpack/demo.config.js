@@ -6,7 +6,7 @@ module.exports = {
     mode: 'development',
 
     entry: {
-        egocloud: path.resolve(__dirname, '../demo/index.ts')
+        egocloud: path.resolve(__dirname, '../playground/index.ts')
     },
 
     module: {
@@ -23,7 +23,7 @@ module.exports = {
         {
             title: 'EgoCloud',
             filename: 'index.html',
-            template: path.resolve(__dirname, '../demo/index.html')
+            template: path.resolve(__dirname, '../playground/index.html')
         }
     )],
     
@@ -31,15 +31,15 @@ module.exports = {
         extensions: ['.ts', '.js']
     },
     
-    output: {
-        path: path.resolve(__dirname, '../demo/dist'),
-        filename: '[name].js' 
-    },
+    // output: {
+    //     path: path.resolve(__dirname, '../playground/dist'),
+    //     filename: '[name].js' 
+    // },
     
     devServer: {
 
         static: {
-            directory: path.resolve(__dirname, '../demo/dist')
+            directory: path.resolve(__dirname, '../playground')
         },
 
         port: 3000,

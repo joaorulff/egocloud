@@ -14,20 +14,16 @@ export class SceneViewer {
     public dataset!: any;
     public scene!: Scene;
 
-    constructor( /* containerElement: HTMLDivElement*/ ){
+    constructor( containerElement: HTMLDivElement ){
 
         // Creating scene
-        // this.scene = new Scene( containerElement );
-
-        console.log('Creating Scene Viewer....');
-
+        this.scene = new Scene( containerElement );
+        
     }
 
     render( dataset: Dataset ){
 
-        // this.scene.show( dataset );
-
-        console.log('Rendering dataset into Scene');
+        this.scene.show( dataset );
 
     }
 

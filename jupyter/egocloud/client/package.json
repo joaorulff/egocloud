@@ -1,0 +1,21 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "egocloud": "file:../../../package/egocloud-1.0.0.tgz"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.5",
+    "babel-loader": "^9.1.2",
+    "ts-loader": "^9.4.2"
+  }
+}

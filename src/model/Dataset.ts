@@ -3,10 +3,10 @@ import { WorldPointCloud } from "./renderables/world/WorldPointCloud";
 
 export class Dataset {
 
-    // World point cloud
+    // world point cloud
     public worldPointCloud!: WorldPointCloud;
 
-    // Streams
+    // streams
     public streams: { [name: string]: number } = {};
 
     constructor( rawWorldPointCloud: IRawWorldPointCloud ){

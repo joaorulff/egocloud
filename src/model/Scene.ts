@@ -1,7 +1,14 @@
 // third-party
 import * as THREE from 'three';
+
+// three modules
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
+// model
 import { SceneManager } from '../SceneManager';
 import { Dataset } from './Dataset';
+
+
 
 export class Scene {
 
@@ -12,6 +19,9 @@ export class Scene {
     public camera!: THREE.PerspectiveCamera;
     public scene!: THREE.Scene;
     public renderer!: THREE.WebGLRenderer;
+
+    // controls
+    private orbitControls!: OrbitControls;
 
     // dataset
     public dataset!: Dataset;
@@ -34,6 +44,9 @@ export class Scene {
         // initialize renderer
         this.initialize_renderer( containerWidth, containerHeight );
 
+        // initialize controls
+        this.initialize_orbit_controls();
+
         // initializing scene manager
         this.sceneManager = new SceneManager( this.scene );
 
@@ -44,17 +57,6 @@ export class Scene {
         while (this.scene.children.length){
             this.scene.remove(this.scene.children[0]);
         }  
-
-    }
-
-    private initialize_scene(): void {
-
-        const scene: THREE.Scene = new THREE.Scene();
-        scene.background = new THREE.Color( 'white' );
-        scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
-
-        // saving scene ref
-        this.scene = scene;
 
     }
 
@@ -95,6 +97,24 @@ export class Scene {
 
         // saving ref
         this.renderer = renderer;
+
+    }
+
+    private initialize_scene(): void {
+
+        const scene: THREE.Scene = new THREE.Scene();
+        scene.background = new THREE.Color( 'white' );
+        scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
+
+        // saving scene ref
+        this.scene = scene;
+
+    }
+
+    private initialize_orbit_controls(): void {
+
+        const controls: OrbitControls = new OrbitControls( this.camera, this.renderer.domElement );
+        this.orbitControls = controls;
 
     }
 
