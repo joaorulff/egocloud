@@ -21,8 +21,8 @@ module.exports = {
     
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].js', 
-        library: 'egocloud',
-        libraryTarget: 'umd'
-    },
+        filename: 'egocloud.js', 
+        library: 'egocloud'
+        // libraryTarget: 'umd'
+    }
 }

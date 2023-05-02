@@ -11,15 +11,18 @@ class Egocloud:
 
         ## loading vis lib
         self.vislib = None
-        # vis_path = "./client/dist/egocloud.js"
-        # with open(vis_path, "r") as f:
-        #     self.vislib = f.read()
-        #     print(self.vislib)
         
-    def visualize(self):
+        ## vis lib path
+        visLibRelPath = "./client/dist/egocloud.js"
+        visLibAbsPath = f'{os.path.dirname(os.path.abspath(__file__))}/{visLibRelPath}'
 
-        # Plotting the Radial Bar Chart
+        with open(visLibAbsPath, "r") as f:
+            self.vislib = f.read()
+        
+    def visualize(self, data):
+
         execute_js(
+            data_dict=data,
             library_list=[self.vislib],
             main_function="egocloud.render")
 

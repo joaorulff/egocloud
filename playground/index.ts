@@ -1,7 +1,6 @@
 import { SceneViewer } from '../src/SceneViewer';
 import { Dataset } from '../src/model/Dataset';
 
-
 fetch('./data/voxelized-pointcloud.json')
     .then((response) => response.json())
     .then((json) => {
