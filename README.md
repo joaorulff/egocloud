@@ -13,7 +13,7 @@ Egocloud is available through NPM:
 
 ### Installation
 
-``` npm install egocloud```
+```npm install egocloud```
 
 Egocloud can be added to your project as the following: 
 
