@@ -8,8 +8,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { SceneManager } from '../SceneManager';
 import { Dataset } from './Dataset';
 
-
-
 export class Scene {
 
     // container ref

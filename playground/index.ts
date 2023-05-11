@@ -1,21 +1,31 @@
 import { SceneViewer } from '../src/SceneViewer';
 import { Dataset } from '../src/model/Dataset';
 
-fetch('./data/voxelized-pointcloud.json')
-    .then((response) => response.json())
-    .then((json) => {
+
+const main = async () => {
         
-        const positions = json.xyz_world
-        const colors = json.colors;
+    let pointCloud: any = await fetch('./data/voxelized-pointcloud.json');
+    pointCloud = await pointCloud.json();
 
-        // Creating dataset
-        const dataset: Dataset = new Dataset( { positions: positions, colors: colors, normals: [] } );
+    let eyes: any =  await fetch('./data/eye.json');
+    eyes = await eyes.json();
 
-        // Testing...
-        const mainDiv: HTMLDivElement = <HTMLDivElement>document.getElementById('main-div');
-        const egoCloud = new SceneViewer( mainDiv );
-        egoCloud.render( dataset );
-    
-    });
+    const positions = pointCloud.xyz_world
+    const colors = pointCloud.colors;
+
+    let eyePositions: any = eyes.map( (element: any) => [element.GazeOrigin.x, element.GazeOrigin.y, (-1)*element.GazeOrigin.z] );
+
+    const dataset: Dataset = new Dataset( { positions: positions, colors: colors, normals: [] } );
+    dataset.add_point_cloud( 'eye-position', eyePositions, [], [] );
+
+    // Testing...
+    const mainDiv: HTMLDivElement = <HTMLDivElement>document.getElementById('main-div');
+    const egoCloud = new SceneViewer( mainDiv );
+    egoCloud.render( dataset );
+
+
+}
+
+main();
 
 

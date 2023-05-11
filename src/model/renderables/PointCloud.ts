@@ -4,10 +4,10 @@ export abstract class PointCloud {
 
     public extent!: number[][];
 
-    constructor( public name: string, public points: number[][], public colors: number[][], public normals: number[][], public timestamps: number[] ){
+    constructor( public name: string, public points: number[][], public normals: number[][], public colors: number[][] ){
 
         // calculating point extent
-        this.extent = DataUtils.calculate_extents( points );
+        // this.extent = DataUtils.calculate_extents( points );
 
     }
 
@@ -19,7 +19,7 @@ export abstract class PointCloud {
 
     public get_buffer_positions(): [number[], number[], number[]] {
          
-        return [ this.points.flat(), this.colors.flat(), this.normals.flat() ];
+        return [ this.points.flat(), this.normals.flat(), this.colors.flat() ];
     
     }
 
