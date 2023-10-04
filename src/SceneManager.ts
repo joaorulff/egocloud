@@ -1,70 +1,42 @@
 // third party
 import * as THREE from 'three';
+import { Object3D } from 'three';
 import { Dataset } from './model/Dataset';
-
-// model 
-import { PointCloud } from "./model/renderables/PointCloud";
 
 export class SceneManager {
 
     constructor( public scene: THREE.Scene ){}
 
-    public add_dataset_to_scene( dataset: Dataset ){
+    public hide_object( name: string, visibility: boolean ){
 
-        // adding world point cloud
-        this.add_point_cloud( dataset.worldPointCloud );
-
-        // adding point cloud streams
-        Object.values( dataset.streamPointClouds ).forEach( (pointCloud: PointCloud) => {
-            this.add_stream_point_cloud( pointCloud );
-        });
-
-    }
-    
-    private add_point_cloud( pointCloud: PointCloud, materialParams: any = {} ): THREE.Points {
-
-        // getting raw data
-        const [points, colors, normals] = pointCloud.get_buffer_positions();
-
-        // loading buffers
-        const pointgeometry = new THREE.BufferGeometry();
-        if(points.length > 0) pointgeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( points, 3 ) );
-        if(colors.length > 0) pointgeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
-        if(normals.length > 0) pointgeometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
-        pointgeometry.computeBoundingBox();
-
-        const pointmaterial = new THREE.PointsMaterial( { size: 0.015, vertexColors: true, sizeAttenuation: true, transparent: true } );        
-        const pointCloudObject = new THREE.Points( pointgeometry, pointmaterial );
-
-        // adding to scene
-        pointCloudObject.name = pointCloud.name;
-        this.scene.add( pointCloudObject );
-        
-        return pointCloudObject;
+        const currentObject: THREE.Object3D | undefined = this.scene.getObjectByName( name );
+        if( currentObject ){
+            currentObject.visible = visibility;
+        }
     
     }
 
-    private add_stream_point_cloud( pointCloud: PointCloud, materialParams: any = {} ): THREE.Points {
+    public update( dataset: Dataset ): void {
 
-        // getting raw data
-        const [points, colors, normals] = pointCloud.get_buffer_positions();
+        // point clouds
+        for (let [key, value] of Object.entries(dataset.pointClouds)) {
+            const currentRenderables: Object3D[] = value.get_renderables()
+            currentRenderables.forEach( (renderable: Object3D) => {
+                this.scene.add( renderable );
+            })
+        }
 
-        // loading buffers
-        const pointgeometry = new THREE.BufferGeometry();
-        if(points.length > 0) pointgeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( points, 3 ) );
-        if(colors.length > 0) pointgeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
-        if(normals.length > 0) pointgeometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
-        pointgeometry.computeBoundingBox();
+        // heatmaps
+        for (let [key, value] of Object.entries(dataset.heatmaps)) {
 
-        const pointmaterial = new THREE.PointsMaterial( { size: 0.015, vertexColors: true, sizeAttenuation: true, transparent: true } );        
-        const pointCloudObject = new THREE.Points( pointgeometry, pointmaterial );
+            const currentRenderables: Object3D[] = value.get_renderables()
+            currentRenderables.forEach( (renderable: Object3D) => {
 
-        // adding to scene
-        pointCloudObject.name = pointCloud.name;
-        this.scene.add( pointCloudObject );
-        
-        return pointCloudObject;
-    
+                console.log('Adding heatmap')
+                this.scene.add( renderable );
+            })
+        }
+
     }
 
 }

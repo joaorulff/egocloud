@@ -1,6 +1,5 @@
 export class DataUtils {
 
-
     public static calculate_extents( points: number[][] ): number[][] {
 
         const xExtent: number[] = [Infinity, -Infinity];
@@ -23,4 +22,5 @@ export class DataUtils {
         return [xExtent, yExtent, zExtent];
 
     }
+
 }

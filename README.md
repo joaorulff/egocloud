@@ -17,7 +17,7 @@ Egocloud is available through NPM:
 
 Egocloud can be added to your project as the following: 
 
-### Basic use
+### Basic usage
 
 ```javascript
 const pc = new EgoCloud(containerElement);
@@ -32,6 +32,13 @@ const mainDiv: HTMLDivElement = document.getElementById("main-div");
 const egoCloud = new SceneViewer( mainDiv );
 egoCloud.render( dataset );
 ```
+
+### Development
+
+The command below will run the development server.
+
+```npm run dev```
+
 
 ## Jupyter
 

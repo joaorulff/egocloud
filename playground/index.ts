@@ -14,15 +14,16 @@ const main = async () => {
     const colors = pointCloud.colors;
 
     let eyePositions: any = eyes.map( (element: any) => [element.GazeOrigin.x, element.GazeOrigin.y, (-1)*element.GazeOrigin.z] );
+    // let handsPosition: any 
 
-    const dataset: Dataset = new Dataset( { positions: positions, colors: colors, normals: [] } );
-    dataset.add_point_cloud( 'eye-position', eyePositions, [], [] );
-
+    const dataset: Dataset = new Dataset();
+    dataset.add_point_cloud( 'world', positions, colors, [], [] );
+    dataset.add_point_cloud( 'eye-position', eyePositions, [], [], [], true );
+    
     // Testing...
     const mainDiv: HTMLDivElement = <HTMLDivElement>document.getElementById('main-div');
     const egoCloud = new SceneViewer( mainDiv );
     egoCloud.render( dataset );
-
 
 }
 

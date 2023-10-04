@@ -63,7 +63,7 @@ export class Scene {
         // saving current dataset
         this.dataset = dataset;
 
-        this.sceneManager.add_dataset_to_scene( this.dataset );
+        this.sceneManager.update( this.dataset );
 
         this.render();
 

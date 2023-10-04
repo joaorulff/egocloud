@@ -7,13 +7,6 @@ import { PanelManager } from './model/panels/PanelManager';
 
 export class SceneViewer {
 
-    /*
-    *
-    *
-    * 
-    * 
-    */
-
     public dataset!: any;
     public scene!: Scene;
 
@@ -22,7 +15,7 @@ export class SceneViewer {
 
     constructor( public containerElement: HTMLDivElement ){
 
-        // Creating options panels
+        // // Creating options panels
         this.panelManager = new PanelManager( this.containerElement );
         this.panelManager.create_panels();
 
@@ -30,10 +23,12 @@ export class SceneViewer {
         this.scene = new Scene( this.panelManager.sceneContainer );
     }
 
-    render( dataset: Dataset ){
+    public hide( name: string, visible: boolean ){
+        this.scene.sceneManager.hide_object( name, visible );
+    }
 
+    public render( dataset: Dataset ){
         this.scene.show( dataset );
-
     }
 
 }

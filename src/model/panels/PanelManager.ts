@@ -11,8 +11,24 @@ export class PanelManager {
         // creating main container
         this.mainContainer = this.create_main_container( this.container );
         this.sceneContainer = this.create_scene_container( this.mainContainer );
-        this.optionsContainer = this.create_options_container( this.mainContainer );
+        // this.optionsContainer = this.create_options_container( this.mainContainer );
     
+    }
+
+    public update_options_container( streams: string[] ): void {
+
+        streams.forEach( ( name: string ) => {
+
+            const currentDiv = document.createElement('div');
+
+            currentDiv.style.width = '100%';
+            currentDiv.style.height = '70px';
+            currentDiv.style.backgroundColor = 'blue';
+
+            this.optionsContainer.append( currentDiv );
+
+        });
+
     }
 
     private create_options_container( container: HTMLDivElement ): HTMLDivElement {
@@ -28,9 +44,11 @@ export class PanelManager {
         optionsDivContainer.style.display = 'flex';
         optionsDivContainer.style.justifyContent = 'center';
         optionsDivContainer.style.alignItems = 'center';
-        optionsDivContainer.style.width = '250px';
+        optionsDivContainer.style.width = '450px';
         optionsDivContainer.style.height = '100%';
 
+        optionsDiv.style.display = 'flex';
+        optionsDiv.style.flexDirection = 'vertical'
         optionsDiv.style.width = '90%';
         optionsDiv.style.height = '95%';
         optionsDiv.style.backgroundColor = '#7F7F7D';
@@ -42,7 +60,6 @@ export class PanelManager {
         optionsDivContainer.append( optionsDiv );
 
         return optionsDiv;
-
 
     }
     

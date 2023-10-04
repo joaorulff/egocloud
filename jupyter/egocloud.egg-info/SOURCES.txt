@@ -1,0 +1,9 @@
+README.md
+setup.py
+egocloud/__init__.py
+egocloud/egocloud.py
+egocloud.egg-info/PKG-INFO
+egocloud.egg-info/SOURCES.txt
+egocloud.egg-info/dependency_links.txt
+egocloud.egg-info/requires.txt
+egocloud.egg-info/top_level.txt

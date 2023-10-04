@@ -1,7 +1,7 @@
-export interface IRawWorldPointCloud {
+// export interface IRawWorldPointCloud {
 
-    positions: number[][],
-    colors: number[][],
-    normals: number[][],
+//     positions: number[][],
+//     colors: number[][],
+//     normals: number[][],
 
-}
+// }
