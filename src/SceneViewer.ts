@@ -13,14 +13,18 @@ export class SceneViewer {
     // panels
     public panelManager!: PanelManager;
 
-    constructor( public containerElement: HTMLDivElement ){
+    constructor( public containerElement: HTMLDivElement, callbacks: { [name: string]: any } = {} ){
 
         // // Creating options panels
         this.panelManager = new PanelManager( this.containerElement );
         this.panelManager.create_panels();
 
         // Creating scene
-        this.scene = new Scene( this.panelManager.sceneContainer );
+        this.scene = new Scene( this.panelManager.sceneContainer, callbacks );
+    }
+
+    public highlight_object( objectType: string, position: number[] | number[][] ): void {
+        this.scene.sceneManager.highlight_object( objectType, position );
     }
 
     public hide( name: string, visible: boolean ){
@@ -30,5 +34,6 @@ export class SceneViewer {
     public render( dataset: Dataset ){
         this.scene.show( dataset );
     }
+
 
 }

@@ -7,6 +7,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // model
 import { SceneManager } from '../SceneManager';
 import { Dataset } from './Dataset';
+import { MousePosition } from './interfaces/MousePosition.interface';
+import { Raycaster } from './raycaster/Raycaster';
 
 export class Scene {
 
@@ -17,6 +19,7 @@ export class Scene {
     public camera!: THREE.PerspectiveCamera;
     public scene!: THREE.Scene;
     public renderer!: THREE.WebGLRenderer;
+    public rayCaster!: Raycaster;
 
     // controls
     private orbitControls!: OrbitControls;
@@ -27,7 +30,7 @@ export class Scene {
     // manager
     public sceneManager: SceneManager;
 
-    constructor( containerRef: HTMLElement ){
+    constructor( containerRef: HTMLElement, public callbacks: { [name: string]: any }  ){
 
         // saving container ref
         this.container = containerRef;
@@ -45,8 +48,11 @@ export class Scene {
         // initialize controls
         this.initialize_orbit_controls();
 
+        // initialize raycaster
+        this.initialize_raycaster();
+
         // initializing scene manager
-        this.sceneManager = new SceneManager( this.scene );
+        this.sceneManager = new SceneManager( this.scene, this.callbacks );
 
     }
 
@@ -60,10 +66,8 @@ export class Scene {
 
     public show( dataset: Dataset ) {
 
-        // saving current dataset
-        this.dataset = dataset;
-
-        this.sceneManager.update( this.dataset );
+        this.sceneManager.set_dataset( dataset );
+        this.sceneManager.update();
 
         this.render();
 
@@ -116,10 +120,22 @@ export class Scene {
 
     }
 
+    private initialize_raycaster(): void {
+
+        this.rayCaster = new Raycaster( this.scene )
+        this.rayCaster.set_scene_events( this.container );
+    }
+
     private render(): void {
 
         requestAnimationFrame( () => this.render() );
 
+        this.orbitControls.update();
+
+        // picking
+        const intersection: { mousePosition: MousePosition, layerName: string | null, intersect: any[] } = this.rayCaster.get_mouse_intersected_point( this.camera, this.sceneManager.get_interactive_layers() );
+        if( intersection.layerName ) this.sceneManager.fire_callback( 'onHover', {'respone': 'success'} )        
+        
         // rendering
         this.renderer.render( this.scene, this.camera );
 

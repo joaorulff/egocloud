@@ -18,7 +18,7 @@ export class Dataset {
 
     constructor(){}
 
-    public add_point_cloud( name: string, points: number[][], normals: number[][], colors: number[][], meta: any[] = [], heatmap: boolean = false ): void {
+    public add_point_cloud( name: string, points: number[][], normals: number[][], colors: number[][], meta: any[] = [], heatmap: boolean = false, interactive: boolean = false ): void {
 
         // TODO: This is creating the voxel grid on the WORLD POINT CLOUD. But it should be adaptive!
         if( !this.voxelGrid && name === 'world' ){
@@ -29,6 +29,9 @@ export class Dataset {
         }
 
         const pointCloud: PointCloud = new PointCloud( name, points, normals, colors );
+        pointCloud.set_interactivity( interactive );
+
+        // indexing
         this.pointClouds[name] = pointCloud; 
         this.voxelGrid.update_voxel_grid( name, points );
 
