@@ -1,7 +1,6 @@
 import { SceneViewer } from '../src/SceneViewer';
 import { Dataset } from '../src/model/Dataset';
 
-
 const main = async () => {
         
     let pointCloud: any = await fetch('./data/voxelized-pointcloud.json');
