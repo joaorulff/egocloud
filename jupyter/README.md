@@ -12,7 +12,7 @@ TBA
 
 ## Running on Jupyter notebook
 
-In the following example, we use the data provided [in this link](https://drive.google.com/file/d/1RySptgmU7Dv_N-2aBnnVK9vI5V75EZPQ/view?usp=sharing). 
+In the following example, we use the data provided [in this link](https://drive.google.com/file/d/1RySptgmU7Dv_N-2aBnnVK9vI5V75EZPQ/view?usp=sharing). Inside your jupyter notebook, run the code below:
 
 ```python
 from egocloud import Egocloud
@@ -23,5 +23,5 @@ with open('.pointcloud.json', 'r') as f:
     pointcloud = json.load(f)
 
 egoCloud = Egocloud()
-egoCloud.visualie( pointcloud )
+egoCloud.visualize( pointcloud )
 ```
