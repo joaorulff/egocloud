@@ -32,6 +32,11 @@ export class SceneViewer {
     }
 
     public render( dataset: Dataset ){
+
+        // clearing scene
+        this.scene.clear_scene();
+
+        // rendering
         this.scene.show( dataset );
     }
 

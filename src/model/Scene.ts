@@ -60,7 +60,7 @@ export class Scene {
 
         while (this.scene.children.length){
             this.scene.remove(this.scene.children[0]);
-        }  
+        }
 
     }
 
