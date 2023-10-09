@@ -42,7 +42,7 @@ The command below will run the development server.
 
 ## Jupyter
 
-Egocloud is available in the format of a Python package, allowing developers to run it within Jupyter notebooks
+Egocloud is available in the format of a Python package, allowing developers to run it within Jupyter notebooks. Please, refer to [this link](https://github.com/joaorulff/egocloud/blob/main/jupyter/README.md) for installation and examples
 
 ### Installation
 
