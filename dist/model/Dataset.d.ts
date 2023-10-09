@@ -1,9 +1,15 @@
-import { IRawWorldPointCloud } from "./interfaces/raw/raw";
-import { WorldPointCloud } from "./renderables/world/WorldPointCloud";
+import { VoxelGrid } from "./voxel/VoxelGrid";
+import { PointCloud } from "./renderables/PointCloud";
+import { VoxelCloud } from "./renderables/VoxelCloud";
 export declare class Dataset {
-    worldPointCloud: WorldPointCloud;
-    streams: {
-        [name: string]: number;
+    voxelGrid: VoxelGrid;
+    pointClouds: {
+        [name: string]: PointCloud;
     };
-    constructor(rawWorldPointCloud: IRawWorldPointCloud);
+    heatmaps: {
+        [name: string]: VoxelCloud;
+    };
+    constructor();
+    add_point_cloud(name: string, points: number[][], normals: number[][], colors: number[][], meta?: any[], heatmap?: boolean, interactive?: boolean): void;
+    private add_heatmap;
 }

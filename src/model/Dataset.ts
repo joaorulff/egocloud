@@ -43,8 +43,6 @@ export class Dataset {
 
     private add_heatmap( name: string ): void {
 
-        console.log('Creating heatmap')
-
         const cells: VoxelCell[] = this.voxelGrid.get_point_cloud_voxel_cells( name );
     
         const cubes: VoxelCube[] = [];

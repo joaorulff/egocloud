@@ -25,6 +25,3 @@ class Egocloud:
             data_dict=data,
             library_list=[self.vislib],
             main_function="egocloud.render")
-
-
-

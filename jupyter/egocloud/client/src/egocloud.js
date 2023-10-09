@@ -17,13 +17,12 @@ export const render = (divName, data) => {
     // appending new element
     jupyterCellContainer.append( chartContainer );
 
-    console.log( Object.keys(data) );
-
-    // Creating dataset
-    const dataset = new Dataset( data['world'] );
+    // TODO: this is only considering world data right now. We need to consider all the streams.
+    const dataset = new Dataset();
+    dataset.add_point_cloud( 'world', data['world']['positions'], data['world']['colors'], [], [], false  );
 
     // Testing...
-    const egoCloud = new SceneViewer( chartContainer );
+    const egoCloud = new SceneViewer( chartContainer, {} );
     egoCloud.render( dataset );
     
 }
