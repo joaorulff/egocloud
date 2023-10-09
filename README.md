@@ -44,24 +44,3 @@ The command below will run the development server.
 
 Egocloud is available in the format of a Python package, allowing developers to run it within Jupyter notebooks. Please, refer to [this link](https://github.com/joaorulff/egocloud/blob/main/jupyter/README.md) for installation and examples
 
-### Installation
-
-```pip install egocloud```
-
-### Basic use
-
-```python
-from egocloud import Egocloud
-
-...
-
-egocloud = Egocloud()
-inputData = { 
-    'world': {
-        'positions': pointcloud['xyz_world'], 
-        'colors': pointcloud['colors'], 
-        'normals': [] }
-}
-egocloud.visualize(inputData)
-```
-
