@@ -10,6 +10,7 @@ export declare class Dataset {
         [name: string]: VoxelCloud;
     };
     constructor();
-    add_point_cloud(name: string, points: number[][], normals: number[][], colors: number[][], meta?: any[], heatmap?: boolean, interactive?: boolean): void;
+    get_object_meta(type: string, name: string, index: number): any;
+    add_point_cloud(name: string, points: number[][], normals: number[][], colors: number[][], meta?: any[], heatmap?: boolean, interactive?: boolean, grid?: boolean): void;
     private add_heatmap;
 }

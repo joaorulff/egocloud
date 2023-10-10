@@ -20,10 +20,11 @@ export class SceneManager {
         this.sceneHighlights.highlight_object( objectType, position, this.scene );
     }
 
-    public fire_callback( eventType: 'onHover'|'onClick', meta: any ){
+    public fire_callback( eventType: 'onHover'|'onClick', objectType: string, objectName: string, index: number, position: number[] ){
 
         if(eventType in this.callbacks){
-            this.callbacks[eventType]( meta );
+            const meta: any = this.dataset.get_object_meta( objectType, objectName, index ) 
+            this.callbacks[eventType](index, objectName, position, meta );
         }
 
     }

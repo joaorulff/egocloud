@@ -133,8 +133,10 @@ export class Scene {
         this.orbitControls.update();
 
         // picking
-        const intersection: { mousePosition: MousePosition, layerName: string | null, intersect: any[] } = this.rayCaster.get_mouse_intersected_point( this.camera, this.sceneManager.get_interactive_layers() );
-        if( intersection.layerName ) this.sceneManager.fire_callback( 'onHover', {'respone': 'success'} )        
+        const intersection: { mousePosition: MousePosition, layerName: string | null, intersect: any[] } = this.rayCaster.get_mouse_intersected_point( this.camera, this.sceneManager.get_interactive_layers() );       
+        if( intersection.layerName ) {
+            this.sceneManager.fire_callback( 'onHover', intersection.intersect[0].object.type, intersection.intersect[0].object.name, intersection.intersect[0].index, intersection.intersect[0].point.toArray() );
+        }
         
         // rendering
         this.renderer.render( this.scene, this.camera );

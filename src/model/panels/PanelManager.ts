@@ -68,7 +68,7 @@ export class PanelManager {
         const sceneContainer: HTMLDivElement = document.createElement('div');
 
         // attributes
-        sceneContainer.setAttribute( 'class', 'sceve-container' );
+        sceneContainer.setAttribute( 'class', 'scene-container' );
 
         // styling
         sceneContainer.style.position = 'absolute'

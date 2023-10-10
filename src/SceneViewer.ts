@@ -40,5 +40,4 @@ export class SceneViewer {
         this.scene.show( dataset );
     }
 
-
 }

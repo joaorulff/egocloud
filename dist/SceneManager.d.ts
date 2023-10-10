@@ -12,7 +12,7 @@ export declare class SceneManager {
         [name: string]: any;
     });
     highlight_object(objectType: string, position: number[] | number[][]): void;
-    fire_callback(eventType: 'onHover' | 'onClick', meta: any): void;
+    fire_callback(eventType: 'onHover' | 'onClick', objectType: string, objectName: string, index: number, position: number[]): void;
     get_interactive_layers(): string[];
     hide_object(name: string, visibility: boolean): void;
     set_dataset(dataset: Dataset): void;

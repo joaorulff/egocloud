@@ -16,7 +16,7 @@ export class Raycaster {
 
         // initializing ray caster
         this.rayCaster = new THREE.Raycaster();
-        this.rayCaster.params.Points!.threshold = 0.005;
+        this.rayCaster.params.Points!.threshold = 0.015;
 
         // this.projectionRaycaster = new THREE.Raycaster();
         // this.projectionRaycaster.params.Points!.threshold = 0.03;

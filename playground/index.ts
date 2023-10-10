@@ -6,9 +6,6 @@ const main = async () => {
     let pointCloud: any = await fetch('./data/voxelized-pointcloud.json');
     pointCloud = await pointCloud.json();
 
-    let pointCloud2: any = await fetch('./data/voxelized-pointcloud-2.json');
-    pointCloud2 = await pointCloud2.json();
-
     let eyes: any =  await fetch('./data/eye.json');
     eyes = await eyes.json();
 
@@ -16,56 +13,21 @@ const main = async () => {
     const colors = pointCloud.colors;
 
     let eyePositions: any = eyes.map( (element: any) => [element.GazeOrigin.x, element.GazeOrigin.y, (-1)*element.GazeOrigin.z] );
+    let eyeTimestamps: any = eyes.map( (element: any) =>  parseInt( element.timestamp.split('-')[0] ) );
 
     const dataset: Dataset = new Dataset();
     dataset.add_point_cloud( 'world', positions, colors, [], [], false  );
-    dataset.add_point_cloud( 'eye-position', eyePositions, [], [], [], false, true );
+    dataset.add_point_cloud( 'eye-position', eyePositions, [], [], eyeTimestamps, false, true );
     
     // Testing...
     const mainDiv: HTMLDivElement = <HTMLDivElement>document.getElementById('main-div');
-    const egoCloud = new SceneViewer( mainDiv, { 'onHover': ( meta: any ) => { 
-        
-        console.log('TEST')
-
+    const egoCloud = new SceneViewer( mainDiv, { 'onHover': ( index: number, name: string, position: number[], meta: any ) => { 
+        egoCloud.highlight_object( 'point', position );
     }});
 
-
-    let index = 0;
-    setInterval( () => {
-
-        if( index % 2 === 0 ){
-
-            console.log('CHANGING');
-
-            const positions1 = pointCloud2.xyz_world
-            const colors1 = pointCloud2.colors;
-    
-            const dataset1: Dataset = new Dataset();
-            dataset1.add_point_cloud( 'world', positions1, colors1, [], [], false  );
-    
-            egoCloud.render( dataset1 );
+    // egoCloud.render( dataset );
 
 
-        } else {
-
-            console.log('CHANGING');
-
-            const positions2 = pointCloud.xyz_world
-            const colors2 = pointCloud.colors;
-    
-            const dataset2: Dataset = new Dataset();
-            dataset2.add_point_cloud( 'world', positions2, colors2, [], [], false  );
-    
-            egoCloud.render( dataset2 );
-
-        }
-
-       index++;
-
-
-    }, 2000 );
-
-    egoCloud.render( dataset );
 
 }
 

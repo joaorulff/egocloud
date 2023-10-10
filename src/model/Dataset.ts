@@ -18,26 +18,37 @@ export class Dataset {
 
     constructor(){}
 
-    public add_point_cloud( name: string, points: number[][], normals: number[][], colors: number[][], meta: any[] = [], heatmap: boolean = false, interactive: boolean = false ): void {
+    public get_object_meta( type: string, name: string, index: number ): any {
 
-        // TODO: This is creating the voxel grid on the WORLD POINT CLOUD. But it should be adaptive!
-        if( !this.voxelGrid && name === 'world' ){
+        if( type === 'Points' ){
+            try {
+                return this.pointClouds[name].meta[index];
+            } catch {
+                return {}
+            }
+        }   
+
+    }
+
+    public add_point_cloud( name: string, points: number[][], normals: number[][], colors: number[][], meta: any[] = [], heatmap: boolean = false, interactive: boolean = false, grid: boolean = false ): void {
+
+        if( grid ){
 
             const extents: number[][] = DataUtils.calculate_extents( points );
             this.voxelGrid = new VoxelGrid(extents[0], extents[1], extents[2])
         
         }
 
-        const pointCloud: PointCloud = new PointCloud( name, points, normals, colors );
+        const pointCloud: PointCloud = new PointCloud( name, points, normals, colors, meta );
         pointCloud.set_interactivity( interactive );
 
         // indexing
         this.pointClouds[name] = pointCloud; 
         this.voxelGrid.update_voxel_grid( name, points );
 
-        if( heatmap ){
-            this.add_heatmap( name );
-        }
+        // if( heatmap ){
+        //     this.add_heatmap( name );
+        // }
 
     }
 
@@ -77,7 +88,6 @@ export class Dataset {
 
         })
         
-        console.log(colors)
         const heatmap: VoxelCloud = new VoxelCloud( `${name}-heatmap`, cubes, colors, opacities );
         this.heatmaps[`${name}-heatmap`] = heatmap;
     }

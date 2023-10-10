@@ -15,7 +15,7 @@ export class PointCloud extends Renderable {
     // three
     // public TPointCloud!: Object3D;
 
-    constructor( public name: string, public points: number[][], public normals: number[][], public colors: number[][] ){
+    constructor( public name: string, public points: number[][], public normals: number[][], public colors: number[][], public meta: any[] ){
 
         super( name );
 
