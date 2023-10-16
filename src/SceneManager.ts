@@ -3,17 +3,23 @@ import * as THREE from 'three';
 import { Object3D, Scene } from 'three';
 import { Dataset } from './model/Dataset';
 import { SceneHighlights } from './model/highlights/Highlights';
+import { SceneStyleManager } from './SceneStyleManager';
 
 export class SceneManager {
 
     // dataset
     public dataset!: Dataset
 
-    // highlights
+    // helpers
     public sceneHighlights!: SceneHighlights;
+    public sceneStyleManager!: SceneStyleManager;
+
+    // three objects
+    // public 
 
     constructor( public scene: THREE.Scene, public callbacks: { [name: string]: any }  ){
         this.sceneHighlights = new SceneHighlights();
+        this.sceneStyleManager = new SceneStyleManager();
     }
 
     public highlight_object( objectType: string, position: number[] | number[][] ): void {
@@ -23,7 +29,7 @@ export class SceneManager {
     public fire_callback( eventType: 'onHover'|'onClick', objectType: string, objectName: string, index: number, position: number[] ){
 
         if(eventType in this.callbacks){
-            const meta: any = this.dataset.get_object_meta( objectType, objectName, index ) 
+            const meta: any = this.dataset.get_object_meta( objectType, objectName, index );
             this.callbacks[eventType](index, objectName, position, meta );
         }
 
@@ -55,6 +61,10 @@ export class SceneManager {
     
     }
 
+    public set_style( name: string, style: string, value: number ): void {
+        this.sceneStyleManager.change_style( name, style, value, this.scene );
+    }
+
     public set_dataset( dataset: Dataset ): void {
         this.dataset = dataset;
     }
@@ -65,20 +75,21 @@ export class SceneManager {
 
             // point clouds
             for (let [key, value] of Object.entries(this.dataset.pointClouds)) {
-                const currentRenderables: Object3D[] = value.get_renderables()
-                currentRenderables.forEach( (renderable: Object3D) => {
-                    this.scene.add( renderable );
-                })
+                const currentRenderable: Object3D = value.get_renderables();
+                this.scene.add( currentRenderable );
+                // currentRenderables.forEach( (renderable: Object3D) => {
+                    // this.scene.add( renderable );
+                // })
             }
 
-            // heatmaps
-            for (let [key, value] of Object.entries(this.dataset.heatmaps)) {
+            // // heatmaps
+            // for (let [key, value] of Object.entries(this.dataset.heatmaps)) {
 
-                const currentRenderables: Object3D[] = value.get_renderables()
-                currentRenderables.forEach( (renderable: Object3D) => {
-                    this.scene.add( renderable );
-                })
-            }
+            //     const currentRenderables: Object3D[] = value.get_renderables()
+            //     currentRenderables.forEach( (renderable: Object3D) => {
+            //         this.scene.add( renderable );
+            //     })
+            // }
 
         }
 

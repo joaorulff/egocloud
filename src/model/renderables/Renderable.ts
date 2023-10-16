@@ -5,6 +5,6 @@ export abstract class Renderable {
 
     constructor( public id: string ){}
 
-    public abstract get_renderables(): THREE.Object3D[];
+    public abstract get_renderables(): THREE.Object3D;
 
 }

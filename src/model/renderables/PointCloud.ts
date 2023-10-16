@@ -12,9 +12,6 @@ export class PointCloud extends Renderable {
     // interativity
     public interactive: boolean = false;
 
-    // three
-    // public TPointCloud!: Object3D;
-
     constructor( public name: string, public points: number[][], public normals: number[][], public colors: number[][], public meta: any[] ){
 
         super( name );
@@ -28,7 +25,7 @@ export class PointCloud extends Renderable {
         this.interactive = interactive;
     }
 
-    public get_renderables(): THREE.Object3D[] {
+    public get_renderables(): THREE.Object3D {
 
         const [points, colors, normals] = this.get_buffer_positions();
 
@@ -45,7 +42,7 @@ export class PointCloud extends Renderable {
         // adding to scene
         pointCloudObject.name = this.name;
         
-        return [pointCloudObject];
+        return pointCloudObject;
 
     }
 

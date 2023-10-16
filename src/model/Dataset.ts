@@ -5,6 +5,7 @@ import { VoxelCube } from "./interfaces/VoxelCube.interface";
 import { VoxelCloud } from "./renderables/VoxelCloud";
 import { VoxelCell } from "./voxel/VoxelCell";
 import * as d3 from 'd3';
+import { Object3D } from "three";
 
 export class Dataset {
 
@@ -15,6 +16,7 @@ export class Dataset {
     public heatmaps: { [name: string]: VoxelCloud } = {};
 
     // add lines
+
 
     constructor(){}
 
@@ -76,7 +78,6 @@ export class Dataset {
 
 
         cells.forEach( (cell: VoxelCell) => {
-
 
             cubes.push( cell.get_voxel_cube() );
             

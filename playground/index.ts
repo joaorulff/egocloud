@@ -16,7 +16,7 @@ const main = async () => {
     let eyeTimestamps: any = eyes.map( (element: any) =>  parseInt( element.timestamp.split('-')[0] ) );
 
     const dataset: Dataset = new Dataset();
-    dataset.add_point_cloud( 'world', positions, colors, [], [], false  );
+    dataset.add_point_cloud( 'world', positions, colors, [], [], false, false, true  );
     dataset.add_point_cloud( 'eye-position', eyePositions, [], [], eyeTimestamps, false, true );
     
     // Testing...
@@ -25,9 +25,13 @@ const main = async () => {
         egoCloud.highlight_object( 'point', position );
     }});
 
-    // egoCloud.render( dataset );
+    egoCloud.render( dataset );
 
-
+    // let i = 0.01
+    // setInterval( () => {
+    //     egoCloud.set_style('world', 'size', i );
+    //     i += 0.01;
+    // }, 2000);
 
 }
 

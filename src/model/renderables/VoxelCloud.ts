@@ -10,7 +10,7 @@ export class VoxelCloud extends Renderable {
 
     }
 
-    public get_renderables(): THREE.Object3D[] {
+    public get_renderables(): THREE.Object3D {
 
         // creating group of highlighted objects
         const group: THREE.Group = new THREE.Group();
@@ -34,7 +34,7 @@ export class VoxelCloud extends Renderable {
 
         })
 
-        return [group];
+        return group;
     }
 
 }

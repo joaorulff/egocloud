@@ -31,6 +31,10 @@ export class SceneViewer {
         this.scene.sceneManager.hide_object( name, visible );
     }
 
+    public set_style( name: string, style: string, value: number ): void {
+        this.scene.sceneManager.set_style( name, style, value );
+    }
+
     public render( dataset: Dataset ){
 
         // clearing scene
