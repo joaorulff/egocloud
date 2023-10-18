@@ -11,5 +11,6 @@ export declare class SceneViewer {
     });
     highlight_object(objectType: string, position: number[] | number[][]): void;
     hide(name: string, visible: boolean): void;
+    set_style(name: string, style: string, value: number): void;
     render(dataset: Dataset): void;
 }

@@ -7,5 +7,5 @@ export declare class VoxelCloud extends Renderable {
     colors: number[][];
     opacities: number[];
     constructor(name: string, cubes: VoxelCube[], colors: number[][], opacities: number[]);
-    get_renderables(): THREE.Object3D[];
+    get_renderables(): THREE.Object3D;
 }

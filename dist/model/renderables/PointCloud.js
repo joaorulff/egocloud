@@ -87,7 +87,7 @@ var PointCloud = (function (_super) {
         var pointmaterial = new THREE.PointsMaterial({ size: 0.015, vertexColors: true, sizeAttenuation: true, transparent: true });
         var pointCloudObject = new THREE.Points(pointgeometry, pointmaterial);
         pointCloudObject.name = this.name;
-        return [pointCloudObject];
+        return pointCloudObject;
     };
     PointCloud.prototype.get_buffer_positions = function () {
         return [this.points.flat(), this.normals.flat(), this.colors.flat()];

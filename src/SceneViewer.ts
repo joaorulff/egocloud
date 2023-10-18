@@ -4,10 +4,11 @@ import { Scene } from './model/Scene';
 
 // panels
 import { PanelManager } from './model/panels/PanelManager';
+import { Line } from './model/interfaces/Line.interface';
 
 export class SceneViewer {
 
-    public dataset!: any;
+    public dataset!: Dataset;
     public scene!: Scene;
 
     // panels
@@ -23,8 +24,12 @@ export class SceneViewer {
         this.scene = new Scene( this.panelManager.sceneContainer, callbacks );
     }
 
-    public highlight_object( objectType: string, position: number[] | number[][] ): void {
+    public highlight( objectType: string, position: number[] | Line ): void {
         this.scene.sceneManager.highlight_object( objectType, position );
+    }
+
+    public clear_highlights(): void{
+        this.scene.sceneManager.clear_highlights();
     }
 
     public hide( name: string, visible: boolean ){

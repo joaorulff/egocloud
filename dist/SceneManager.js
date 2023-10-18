@@ -29,11 +29,13 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SceneManager = void 0;
 var Highlights_1 = require("./model/highlights/Highlights");
+var SceneStyleManager_1 = require("./SceneStyleManager");
 var SceneManager = (function () {
     function SceneManager(scene, callbacks) {
         this.scene = scene;
         this.callbacks = callbacks;
         this.sceneHighlights = new Highlights_1.SceneHighlights();
+        this.sceneStyleManager = new SceneStyleManager_1.SceneStyleManager();
     }
     SceneManager.prototype.highlight_object = function (objectType, position) {
         this.sceneHighlights.highlight_object(objectType, position, this.scene);
@@ -73,44 +75,28 @@ var SceneManager = (function () {
             currentObject.visible = visibility;
         }
     };
+    SceneManager.prototype.set_style = function (name, style, value) {
+        this.sceneStyleManager.change_style(name, style, value, this.scene);
+    };
     SceneManager.prototype.set_dataset = function (dataset) {
         this.dataset = dataset;
     };
     SceneManager.prototype.update = function () {
-        var e_2, _a, e_3, _b;
-        var _this = this;
+        var e_2, _a;
         if (this.dataset) {
             try {
-                for (var _c = __values(Object.entries(this.dataset.pointClouds)), _d = _c.next(); !_d.done; _d = _c.next()) {
-                    var _e = __read(_d.value, 2), key = _e[0], value = _e[1];
-                    var currentRenderables = value.get_renderables();
-                    currentRenderables.forEach(function (renderable) {
-                        _this.scene.add(renderable);
-                    });
+                for (var _b = __values(Object.entries(this.dataset.pointClouds)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                    var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+                    var currentRenderable = value.get_renderables();
+                    this.scene.add(currentRenderable);
                 }
             }
             catch (e_2_1) { e_2 = { error: e_2_1 }; }
             finally {
                 try {
-                    if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
                 finally { if (e_2) throw e_2.error; }
-            }
-            try {
-                for (var _f = __values(Object.entries(this.dataset.heatmaps)), _g = _f.next(); !_g.done; _g = _f.next()) {
-                    var _h = __read(_g.value, 2), key = _h[0], value = _h[1];
-                    var currentRenderables = value.get_renderables();
-                    currentRenderables.forEach(function (renderable) {
-                        _this.scene.add(renderable);
-                    });
-                }
-            }
-            catch (e_3_1) { e_3 = { error: e_3_1 }; }
-            finally {
-                try {
-                    if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
-                }
-                finally { if (e_3) throw e_3.error; }
             }
         }
     };

@@ -2,12 +2,14 @@ import { VoxelCell } from "./VoxelCell";
 
 export class VoxelGrid {
 
-    private cellSize: number = 0.025;
+    private cellSize: number = 0.015;
 
     constructor( public xExtent: number[], public yExtent: number[], public zExtent: number[] ){} 
 
     // Voxel Map: maps a 'i-j-k' to a voxelCell;
     public voxelMap: { [voxelIndex: string]: VoxelCell } = {};
+    public indexedPointClouds: { [name: string]: VoxelCell[] } = {};
+
 
     public update_voxel_grid( pointCloudName: string, points: number[][] ): void {
 
@@ -29,27 +31,30 @@ export class VoxelGrid {
                                     [this.xExtent[0] + (xIndex*this.cellSize), this.xExtent[0] + ((xIndex+1)*this.cellSize) ], 
                                     [this.yExtent[0] + (yIndex*this.cellSize), this.yExtent[0] + ((yIndex+1)*this.cellSize) ], 
                                     [this.zExtent[0] + (zIndex*this.cellSize), this.zExtent[0] + ((zIndex+1)*this.cellSize) ])
+
+
+                // reverse index
+                if( !(pointCloudName in this.indexedPointClouds ) ) {
+                    this.indexedPointClouds[pointCloudName] = [];
+                }
+                this.indexedPointClouds[pointCloudName].push(this.voxelMap[voxelIndex]); 
             }
 
             // indexing point
-            this.voxelMap[voxelIndex].index_new_point( pointCloudName, index);
+            this.voxelMap[voxelIndex].index_new_point( pointCloudName, index );
 
         });     
         
     }
 
-    public get_point_cloud_voxel_cells( pointCloudName: string ): VoxelCell[] {
+    public get_point_cloud_voxel_cells( pointCloudName: string, points: number[][] = [] ): VoxelCell[] {
 
-        const voxelCells: VoxelCell[] = [];
-        Object.values(this.voxelMap).forEach( (voxelCell: VoxelCell) => {
+        if( pointCloudName in this.indexedPointClouds )
+            return this.indexedPointClouds[pointCloudName];
 
-            if( voxelCell.is_point_cloud_indexed(pointCloudName) ){
-                voxelCells.push( voxelCell );
-            }
+        return [];
 
-        });      
 
-        return voxelCells;
     }
     
 }

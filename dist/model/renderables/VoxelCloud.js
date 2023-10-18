@@ -65,7 +65,7 @@ var VoxelCloud = (function (_super) {
             object.position.z = cube.center[2];
             group.add(object);
         });
-        return [group];
+        return group;
     };
     return VoxelCloud;
 }(Renderable_1.Renderable));

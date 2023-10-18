@@ -1,12 +1,10 @@
 import * as THREE from 'three';
-import { Scene, Vector3 } from 'three';
+import { Scene } from 'three';
 import { MousePosition } from '../interfaces/MousePosition.interface';
-import { PointCloud } from '../renderables/PointCloud';
 
 export class Raycaster {
 
     private rayCaster!: THREE.Raycaster;
-    // private projectionRaycaster!: THREE.Raycaster;
 
     // Mouse pointer
     public pointer: THREE.Vector2 = new THREE.Vector2();
@@ -17,28 +15,7 @@ export class Raycaster {
         // initializing ray caster
         this.rayCaster = new THREE.Raycaster();
         this.rayCaster.params.Points!.threshold = 0.015;
-
-        // this.projectionRaycaster = new THREE.Raycaster();
-        // this.projectionRaycaster.params.Points!.threshold = 0.03;
-
     }
-
-    // public calculate_point_cloud_intersection(origin: THREE.Vector3, direction: THREE.Vector3, pointCloud: PointCloud ): THREE.Vector3[] {
-
-    //     this.projectionRaycaster.set( origin, direction );
-
-    //     let intersections: any [] = []
-    //     do{
-    //         intersections = this.projectionRaycaster.intersectObject(this.scene.getObjectByName(pointCloud.name))
-    //         this.projectionRaycaster.params.Points.threshold += 0.005;
-    //     } while( intersections.length === 0 );
-        
-    //     // turning back to original threshold
-    //     this.projectionRaycaster.params.Points.threshold = 0.03;
-
-    //     return intersections.map( intersection => intersection.point );
-
-    // }
 
     public get_mouse_intersected_point( 
         camera: THREE.PerspectiveCamera, 

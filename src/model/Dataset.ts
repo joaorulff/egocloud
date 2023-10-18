@@ -5,92 +5,98 @@ import { VoxelCube } from "./interfaces/VoxelCube.interface";
 import { VoxelCloud } from "./renderables/VoxelCloud";
 import { VoxelCell } from "./voxel/VoxelCell";
 import * as d3 from 'd3';
-import { Object3D } from "three";
+import { LineSet } from "./renderables/LineSet";
+import { Line } from "./interfaces/Line.interface";
 
 export class Dataset {
 
     public voxelGrid!: VoxelGrid;
 
-    // available point clouds
+    // available sets
     public pointClouds: { [name: string]: PointCloud } = {};
     public heatmaps: { [name: string]: VoxelCloud } = {};
-
-    // add lines
-
+    public lineSets: { [name: string]: LineSet } = {};
 
     constructor(){}
 
     public get_object_meta( type: string, name: string, index: number ): any {
 
         if( type === 'Points' ){
-            try {
+             return {};
+            } try {
                 return this.pointClouds[name].meta[index];
             } catch {
-                return {}
-            }
+              
         }   
-
     }
 
-    public add_point_cloud( name: string, points: number[][], normals: number[][], colors: number[][], meta: any[] = [], heatmap: boolean = false, interactive: boolean = false, grid: boolean = false ): void {
+    public add_point_cloud( 
+        name: string, 
+        points: number[][], 
+        normals: number[][], 
+        colors: number[][], 
+        meta: any[] = [],  
+        interactive: boolean = false, 
+        grid: boolean = false ): void {
 
         if( grid ){
-
             const extents: number[][] = DataUtils.calculate_extents( points );
-            this.voxelGrid = new VoxelGrid(extents[0], extents[1], extents[2])
-        
+            this.voxelGrid = new VoxelGrid(extents[0], extents[1], extents[2]);
         }
 
-        const pointCloud: PointCloud = new PointCloud( name, points, normals, colors, meta );
+        const pointCloud: PointCloud = new PointCloud( name, points, colors, normals, meta );
         pointCloud.set_interactivity( interactive );
 
         // indexing
         this.pointClouds[name] = pointCloud; 
         this.voxelGrid.update_voxel_grid( name, points );
 
-        // if( heatmap ){
-        //     this.add_heatmap( name );
-        // }
+    }
+
+    public add_line_set( name: string, lines: Line[], colors: number[][], meta: any[] ){
+
+        const lineSet: LineSet = new LineSet( name, lines, colors, meta );
+        this.lineSets[name] = lineSet;
 
     }
 
-    private add_heatmap( name: string ): void {
+    public add_heatmap( name: string, color: number[] ): void {
 
         const cells: VoxelCell[] = this.voxelGrid.get_point_cloud_voxel_cells( name );
-    
+
+        // if the point cloud is not indexed
+        if( cells.length === 0 ) return;
+
         const cubes: VoxelCube[] = [];
         const colors: number[][] = [];
         const opacities: number[] = [];
 
         // getting extent
-        let max: number = -Infinity;
+        let [max, min] = [-Infinity, +Infinity];
         cells.forEach( (cell: VoxelCell) => {
             if( cell.get_point_cloud_size(name) > max ){
                 max = cell.get_point_cloud_size(name);
             }
+            if( cell.get_point_cloud_size(name) < min ){
+                min = cell.get_point_cloud_size(name)
+            }
         })
 
-        // creating color scale
-        const colorScale: d3.ScaleSequential<any, any> = 
-        d3.scaleSequential()
-            .domain([0, max])
-            .interpolator(d3.interpolateBlues);
-
+        const opacityScale: d3.ScaleLinear<any, any> = d3.scaleLinear()
+            .domain([min, max])
+            .range([0.2,0.7]);
 
         cells.forEach( (cell: VoxelCell) => {
-
             cubes.push( cell.get_voxel_cube() );
-            
-            const color: any = d3.color(colorScale( cell.get_point_cloud_size(name) ));
-            const formatedColor: number[] = [ color.r/255, color.g/255, color.b/255 ];
-            colors.push( formatedColor );
-            
-            opacities.push(0.5);
-
-        })
+            colors.push( color );            
+            opacities.push( opacityScale( cell.get_point_cloud_size(name) ) );
+        });
         
         const heatmap: VoxelCloud = new VoxelCloud( `${name}-heatmap`, cubes, colors, opacities );
         this.heatmaps[`${name}-heatmap`] = heatmap;
+
+        console.log(this.heatmaps);
+
     }
 
 }

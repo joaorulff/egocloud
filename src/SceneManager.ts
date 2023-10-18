@@ -1,8 +1,9 @@
 // third party
 import * as THREE from 'three';
-import { Object3D, Scene } from 'three';
+import { Object3D } from 'three';
 import { Dataset } from './model/Dataset';
 import { SceneHighlights } from './model/highlights/Highlights';
+import { Line } from './model/interfaces/Line.interface';
 import { SceneStyleManager } from './SceneStyleManager';
 
 export class SceneManager {
@@ -14,23 +15,24 @@ export class SceneManager {
     public sceneHighlights!: SceneHighlights;
     public sceneStyleManager!: SceneStyleManager;
 
-    // three objects
-    // public 
-
     constructor( public scene: THREE.Scene, public callbacks: { [name: string]: any }  ){
         this.sceneHighlights = new SceneHighlights();
         this.sceneStyleManager = new SceneStyleManager();
     }
 
-    public highlight_object( objectType: string, position: number[] | number[][] ): void {
+    public highlight_object( objectType: string, position: number[] | Line ): void {
         this.sceneHighlights.highlight_object( objectType, position, this.scene );
     }
 
-    public fire_callback( eventType: 'onHover'|'onClick', objectType: string, objectName: string, index: number, position: number[] ){
+    public clear_highlights(): void {
+        this.sceneHighlights.clear_current_highlight( this.scene );
+    }
+
+    public fire_callback( eventType: 'onHover' | 'onClick', objectType: string, objectName: string, index: number, position: number[] ){
 
         if(eventType in this.callbacks){
             const meta: any = this.dataset.get_object_meta( objectType, objectName, index );
-            this.callbacks[eventType](index, objectName, position, meta );
+            this.callbacks[eventType]( index, objectName, position, meta );
         }
 
     }
@@ -42,7 +44,7 @@ export class SceneManager {
             const layers: string[] = [];
             for (let [key, value] of Object.entries(this.dataset.pointClouds)) {
                 if(value.interactive){
-                    layers.push(value.name)
+                    layers.push(value.name);
                 }
             }
 
@@ -77,19 +79,19 @@ export class SceneManager {
             for (let [key, value] of Object.entries(this.dataset.pointClouds)) {
                 const currentRenderable: Object3D = value.get_renderables();
                 this.scene.add( currentRenderable );
-                // currentRenderables.forEach( (renderable: Object3D) => {
-                    // this.scene.add( renderable );
-                // })
             }
 
-            // // heatmaps
-            // for (let [key, value] of Object.entries(this.dataset.heatmaps)) {
+            // lines
+            for (let [key, value] of Object.entries(this.dataset.lineSets)) {
+                const currentRenderable: Object3D = value.get_renderables();
+                this.scene.add( currentRenderable );
+            }
 
-            //     const currentRenderables: Object3D[] = value.get_renderables()
-            //     currentRenderables.forEach( (renderable: Object3D) => {
-            //         this.scene.add( renderable );
-            //     })
-            // }
+            // heatmaps
+            for (let [key, value] of Object.entries(this.dataset.heatmaps)) {
+                const currentRenderable: Object3D = value.get_renderables();
+                this.scene.add( currentRenderable );
+            }
 
         }
 

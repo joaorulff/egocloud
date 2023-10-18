@@ -1,6 +1,5 @@
 // external
 import * as THREE from 'three';
-import { Object3D } from 'three';
 
 import { DataUtils } from '../../utils/DataUtils';
 import { Renderable } from './Renderable';
@@ -47,9 +46,7 @@ export class PointCloud extends Renderable {
     }
 
     public get_buffer_positions(): [number[], number[], number[]] {
-         
         return [ this.points.flat(), this.normals.flat(), this.colors.flat() ];
-    
     }
 
 

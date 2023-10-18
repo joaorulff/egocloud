@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Line } from '../interfaces/Line.interface';
 
 export class SceneHighlights {
 
@@ -10,23 +11,25 @@ export class SceneHighlights {
 
     constructor(){}
 
-    public highlight_object( objectType: string, position: number[] | number[][], scene: THREE.Scene ): void {
+    public highlight_object( objectType: string, position: number[] | Line, scene: THREE.Scene ): void {
+
+        if( objectType === 'point' ){
+            this.highlight_sphere( objectType, <number[]>position, scene );
+            return;
+        } else if( objectType === 'line' ){
+            this.highlight_line( <Line>position, scene );
+        }
+
+    }
+
+    public clear_current_highlight( scene: THREE.Scene ): void {
 
         // clear previous highlights
         this.currentHighlights.forEach( (object: THREE.Object3D) => {
             scene.remove( object );
         })
 
-        if( objectType === 'point' ){
-
-            this.highlight_sphere( objectType, <number[]>position, scene );
-            return;
-        }
-
-
     }
-
-    private clear_current_highlight(): void {}
 
     private highlight_sphere( objectType: string, position: number[] , scene: THREE.Scene ): void {  
 
@@ -48,6 +51,21 @@ export class SceneHighlights {
     
     }
 
-    private highlight_line(): void {}
+    private highlight_line( line: Line, scene: THREE.Scene ): void {
+
+        const origin: THREE.Vector3 = new THREE.Vector3( line.origin[0], line.origin[1], line.origin[2] );
+        const destination: THREE.Vector3 = new THREE.Vector3( line.destination[0], line.destination[1], line.destination[2] );
+
+        // Direction highlight
+        const lineColor: THREE.Color = new THREE.Color( 0.5, 0.5, 0.5 );
+        const lineMaterial = new THREE.LineBasicMaterial({ color: lineColor, linewidth: 2, transparent: true, opacity: 0.5 });
+        const lineGeometry = new THREE.BufferGeometry().setFromPoints( [origin, destination] );
+
+        const lineObj: THREE.Line = new THREE.Line( lineGeometry, lineMaterial );
+
+        this.currentHighlights.push( lineObj );
+        scene.add( lineObj );
+
+    }
 
 }

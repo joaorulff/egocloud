@@ -11,7 +11,6 @@ export class SceneStyleManager {
                 this.change_pointcloud_opacity(<THREE.Points>object, value );
             }
 
-
             return;
         }
 
@@ -23,10 +22,7 @@ export class SceneStyleManager {
 
             return;
         }
-
-
     }
-
 
     private change_pointcloud_size( object: THREE.Points, value: number ): void{
         (<THREE.PointsMaterial>object.material).size = value;

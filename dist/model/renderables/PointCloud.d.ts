@@ -10,6 +10,6 @@ export declare class PointCloud extends Renderable {
     interactive: boolean;
     constructor(name: string, points: number[][], normals: number[][], colors: number[][], meta: any[]);
     set_interactivity(interactive: boolean): void;
-    get_renderables(): THREE.Object3D[];
+    get_renderables(): THREE.Object3D;
     get_buffer_positions(): [number[], number[], number[]];
 }

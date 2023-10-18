@@ -39,6 +39,10 @@ export class VoxelCell {
         this.pointCloudIndices[pointCloudName].add(pointIndex);
     }
 
+    /*
+    *
+    *   Return the number of points of a given point cloud indexed within the cell
+    */
     public get_point_cloud_size( name: string ): number {
         return this.pointCloudIndices[name].size;
     }

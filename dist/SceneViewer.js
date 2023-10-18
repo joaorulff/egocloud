@@ -17,6 +17,9 @@ var SceneViewer = (function () {
     SceneViewer.prototype.hide = function (name, visible) {
         this.scene.sceneManager.hide_object(name, visible);
     };
+    SceneViewer.prototype.set_style = function (name, style, value) {
+        this.scene.sceneManager.set_style(name, style, value);
+    };
     SceneViewer.prototype.render = function (dataset) {
         this.scene.clear_scene();
         this.scene.show(dataset);
