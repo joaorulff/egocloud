@@ -7,6 +7,7 @@ import { VoxelCell } from "./voxel/VoxelCell";
 import * as d3 from 'd3';
 import { LineSet } from "./renderables/LineSet";
 import { Line } from "./interfaces/Line.interface";
+import { Renderable } from "./renderables/Renderable";
 
 export class Dataset {
 
@@ -17,17 +18,32 @@ export class Dataset {
     public heatmaps: { [name: string]: VoxelCloud } = {};
     public lineSets: { [name: string]: LineSet } = {};
 
+    // TODO: refactor these bounding boxes. It should have its own class under renderables folder
+    public boundingBoxes: { [name: string]: THREE.Object3D } = {}
+
     constructor(){}
 
     public get_object_meta( type: string, name: string, index: number ): any {
 
         if( type === 'Points' ){
-             return {};
             } try {
                 return this.pointClouds[name].meta[index];
             } catch {
-              
-        }   
+                return {};
+            }       
+    }
+
+    public get_available_objects():  { [type: string]: string[] } {
+
+        const objects: { [type: string]: string[] } = {
+            'pointClouds': Object.values( this.pointClouds ).map( (object: Renderable) => object.id ),
+            'heatmaps': Object.values( this.heatmaps ).map( (object: Renderable) => object.id ),
+            'lineSets': Object.values( this.lineSets ).map( (object: Renderable) => object.id ),
+            'boundingBoxes': Object.values( this.boundingBoxes ).map( (object: THREE.Object3D) => object.name ),
+        } 
+
+        return objects
+
     }
 
     public add_point_cloud( 
@@ -95,8 +111,7 @@ export class Dataset {
         const heatmap: VoxelCloud = new VoxelCloud( `${name}-heatmap`, cubes, colors, opacities );
         this.heatmaps[`${name}-heatmap`] = heatmap;
 
-        console.log(this.heatmaps);
-
     }
+
 
 }

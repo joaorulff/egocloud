@@ -10,9 +10,7 @@ const main = async () => {
 
     let eyes: any =  await fetch('./data/eye.json');
     eyes = await eyes.json();
-
-
-
+ 
     // if(coord[1] <= -0.39 || coord[1] >= -0.018){
     //     xyz.push(coord);
     //     colors.push(dataset.colors[index]);
@@ -21,11 +19,12 @@ const main = async () => {
     let positions: any = [];
     let colors: any = [];
     pointCloud.xyz_world.forEach( (coord: number[], index: number) => {
-        if(coord[1] <= -0.35){
+        // if(coord[1] <= -0.35){
             positions.push( coord );
             colors.push( pointCloud.colors[index] );
-        }   
+        // }   
     })
+
     // const positions = pointCloud.xyz_world
     // const colors = pointCloud.colors;
 
@@ -33,8 +32,8 @@ const main = async () => {
     // console.log(colors);
 
     let eyePositions: any = eyes.map( (element: any) => [element.GazeOrigin.x, element.GazeOrigin.y, (-1)*element.GazeOrigin.z] );
-    let eyeTimestamps: any = eyes.map( (element: any) =>  parseInt( element.timestamp.split('-')[0] ) );
-
+    let eyeTimestamps: any = eyes.map( (element: any) =>  { return { timestamp: parseInt( element.timestamp.split('-')[0] ) }} );
+    let eyeColors: any = eyes.map( (element: any) =>  [55/255, 126/255, 184/255]);
 
     const lineColors: number [][] = [];
     let eyeDirections: any = eyes.map( (element: any) => {
@@ -52,23 +51,23 @@ const main = async () => {
         
     });
 
-    const projection: number[][] = Projector.project_stream_onto_pointcloud( eyeDirections, positions );
+    // const projection: number[][] = Projector.project_stream_onto_pointcloud( eyeDirections, positions );
 
     const dataset: Dataset = new Dataset();
     dataset.add_point_cloud( 'world', positions, [], colors, [], false, true  );
-    dataset.add_point_cloud( 'eye', eyePositions, [], [], eyeTimestamps, true, false );
-    dataset.add_point_cloud( 'gaze', projection, [], [], eyeTimestamps, true, false );
+    dataset.add_point_cloud( 'eye', eyePositions, [], eyeColors, eyeTimestamps, true, false );
+    // dataset.add_point_cloud( 'gaze', projection, [], [], eyeTimestamps, true, false );
     
     // Testing...
     const mainDiv: HTMLDivElement = <HTMLDivElement>document.getElementById('main-div');
     const egoCloud = new SceneViewer( mainDiv, { 'onHover': ( index: number, name: string, position: number[], meta: any ) => { 
 
-
-        egoCloud.clear_highlights();
-        egoCloud.highlight( 'point', position );
-        egoCloud.highlight( 'point', projection[index] );
-        egoCloud.highlight( 'line', {origin: position, destination: projection[index] });
-
+        console.log(meta);
+        egoCloud.clear_highlights();   
+        if( 'timestamp' in meta ){  
+            egoCloud.highlight( 'point', position ); 
+        }
+        
     }});
 
     egoCloud.render( dataset );

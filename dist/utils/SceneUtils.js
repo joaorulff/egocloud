@@ -4,7 +4,7 @@ exports.SceneUtils = void 0;
 var SceneUtils = (function () {
     function SceneUtils() {
     }
-    SceneUtils.create_scene_div = function (container) {
+    SceneUtils.prototype.calculate_projections = function () {
     };
     return SceneUtils;
 }());

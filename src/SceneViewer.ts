@@ -8,7 +8,7 @@ import { Line } from './model/interfaces/Line.interface';
 
 export class SceneViewer {
 
-    public dataset!: Dataset;
+    // public dataset!: Dataset;
     public scene!: Scene;
 
     // panels
@@ -38,6 +38,10 @@ export class SceneViewer {
 
     public set_style( name: string, style: string, value: number ): void {
         this.scene.sceneManager.set_style( name, style, value );
+    }
+
+    public get_scene_object_names(): { [type: string]: string[] }{
+        return this.scene.sceneManager.dataset.get_available_objects();
     }
 
     public render( dataset: Dataset ){

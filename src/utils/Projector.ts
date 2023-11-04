@@ -1,4 +1,4 @@
-import { Line } from "src/model/interfaces/Line.interface";
+import { Line } from "../model/interfaces/Line.interface";
 
 import * as THREE from 'three';
 

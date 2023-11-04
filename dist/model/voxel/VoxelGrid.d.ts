@@ -8,6 +8,9 @@ export declare class VoxelGrid {
     voxelMap: {
         [voxelIndex: string]: VoxelCell;
     };
+    indexedPointClouds: {
+        [name: string]: VoxelCell[];
+    };
     update_voxel_grid(pointCloudName: string, points: number[][]): void;
-    get_point_cloud_voxel_cells(pointCloudName: string): VoxelCell[];
+    get_point_cloud_voxel_cells(pointCloudName: string, points?: number[][]): VoxelCell[];
 }

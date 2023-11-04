@@ -32,15 +32,19 @@ var SceneHighlights = (function () {
         this.currentHighlights = [];
     }
     SceneHighlights.prototype.highlight_object = function (objectType, position, scene) {
-        this.currentHighlights.forEach(function (object) {
-            scene.remove(object);
-        });
         if (objectType === 'point') {
             this.highlight_sphere(objectType, position, scene);
             return;
         }
+        else if (objectType === 'line') {
+            this.highlight_line(position, scene);
+        }
     };
-    SceneHighlights.prototype.clear_current_highlight = function () { };
+    SceneHighlights.prototype.clear_current_highlight = function (scene) {
+        this.currentHighlights.forEach(function (object) {
+            scene.remove(object);
+        });
+    };
     SceneHighlights.prototype.highlight_sphere = function (objectType, position, scene) {
         var sphereColor = new THREE.Color(0.5, 0.5, 0.5);
         var sphereGeometry = new THREE.SphereGeometry(0.025, 15, 15);
@@ -51,7 +55,16 @@ var SceneHighlights = (function () {
         this.currentHighlights.push(sphereMesh);
         scene.add(sphereMesh);
     };
-    SceneHighlights.prototype.highlight_line = function () { };
+    SceneHighlights.prototype.highlight_line = function (line, scene) {
+        var origin = new THREE.Vector3(line.origin[0], line.origin[1], line.origin[2]);
+        var destination = new THREE.Vector3(line.destination[0], line.destination[1], line.destination[2]);
+        var lineColor = new THREE.Color(0.5, 0.5, 0.5);
+        var lineMaterial = new THREE.LineBasicMaterial({ color: lineColor, linewidth: 2, transparent: true, opacity: 0.5 });
+        var lineGeometry = new THREE.BufferGeometry().setFromPoints([origin, destination]);
+        var lineObj = new THREE.Line(lineGeometry, lineMaterial);
+        this.currentHighlights.push(lineObj);
+        scene.add(lineObj);
+    };
     return SceneHighlights;
 }());
 exports.SceneHighlights = SceneHighlights;

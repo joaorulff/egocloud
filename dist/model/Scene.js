@@ -103,6 +103,9 @@ var Scene = (function () {
         if (intersection.layerName) {
             this.sceneManager.fire_callback('onHover', intersection.intersect[0].object.type, intersection.intersect[0].object.name, intersection.intersect[0].index, intersection.intersect[0].point.toArray());
         }
+        else {
+            this.sceneManager.fire_callback('onHover', '', '', -1, []);
+        }
         this.renderer.render(this.scene, this.camera);
     };
     return Scene;

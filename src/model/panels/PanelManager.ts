@@ -15,53 +15,53 @@ export class PanelManager {
     
     }
 
-    public update_options_container( streams: string[] ): void {
+    // public update_options_container( streams: string[] ): void {
 
-        streams.forEach( ( name: string ) => {
+    //     streams.forEach( ( name: string ) => {
 
-            const currentDiv = document.createElement('div');
+    //         const currentDiv = document.createElement('div');
 
-            currentDiv.style.width = '100%';
-            currentDiv.style.height = '70px';
-            currentDiv.style.backgroundColor = 'blue';
+    //         currentDiv.style.width = '100%';
+    //         currentDiv.style.height = '70px';
+    //         currentDiv.style.backgroundColor = 'blue';
 
-            this.optionsContainer.append( currentDiv );
+    //         this.optionsContainer.append( currentDiv );
 
-        });
+    //     });
 
-    }
+    // }
 
-    private create_options_container( container: HTMLDivElement ): HTMLDivElement {
+    // private create_options_container( container: HTMLDivElement ): HTMLDivElement {
 
-        const optionsDivContainer = document.createElement('div');
-        const optionsDiv = document.createElement('div');
+    //     const optionsDivContainer = document.createElement('div');
+    //     const optionsDiv = document.createElement('div');
 
-        // attributes
-        optionsDivContainer.setAttribute( 'class', 'options-container' );
-        optionsDiv.setAttribute( 'class', 'options-panel' );
+    //     // attributes
+    //     optionsDivContainer.setAttribute( 'class', 'options-container' );
+    //     optionsDiv.setAttribute( 'class', 'options-panel' );
 
-        // styling
-        optionsDivContainer.style.display = 'flex';
-        optionsDivContainer.style.justifyContent = 'center';
-        optionsDivContainer.style.alignItems = 'center';
-        optionsDivContainer.style.width = '450px';
-        optionsDivContainer.style.height = '100%';
+    //     // styling
+    //     optionsDivContainer.style.display = 'flex';
+    //     optionsDivContainer.style.justifyContent = 'center';
+    //     optionsDivContainer.style.alignItems = 'center';
+    //     optionsDivContainer.style.width = '450px';
+    //     optionsDivContainer.style.height = '100%';
 
-        optionsDiv.style.display = 'flex';
-        optionsDiv.style.flexDirection = 'vertical'
-        optionsDiv.style.width = '90%';
-        optionsDiv.style.height = '95%';
-        optionsDiv.style.backgroundColor = '#7F7F7D';
-        optionsDiv.style.opacity = '0.9';
-        optionsDiv.style.border = 'solid #5B5F62';
-        optionsDiv.style.borderRadius = '10px';
+    //     optionsDiv.style.display = 'flex';
+    //     optionsDiv.style.flexDirection = 'vertical'
+    //     optionsDiv.style.width = '90%';
+    //     optionsDiv.style.height = '95%';
+    //     optionsDiv.style.backgroundColor = '#7F7F7D';
+    //     optionsDiv.style.opacity = '0.9';
+    //     optionsDiv.style.border = 'solid #5B5F62';
+    //     optionsDiv.style.borderRadius = '10px';
 
-        container.append( optionsDivContainer );
-        optionsDivContainer.append( optionsDiv );
+    //     container.append( optionsDivContainer );
+    //     optionsDivContainer.append( optionsDiv );
 
-        return optionsDiv;
+    //     return optionsDiv;
 
-    }
+    // }
     
     private create_scene_container( container: HTMLDivElement ): HTMLDivElement {
 

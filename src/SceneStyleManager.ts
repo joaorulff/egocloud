@@ -18,8 +18,6 @@ export class SceneStyleManager {
             if( object?.type === 'Points' ){
                 this.change_pointcloud_size(<THREE.Points>object, value );
             }
-
-
             return;
         }
     }

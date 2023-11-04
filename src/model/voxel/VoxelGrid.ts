@@ -10,7 +10,6 @@ export class VoxelGrid {
     public voxelMap: { [voxelIndex: string]: VoxelCell } = {};
     public indexedPointClouds: { [name: string]: VoxelCell[] } = {};
 
-
     public update_voxel_grid( pointCloudName: string, points: number[][] ): void {
 
         // calculating number of cells

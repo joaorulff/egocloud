@@ -15,6 +15,9 @@ export class SceneManager {
     public sceneHighlights!: SceneHighlights;
     public sceneStyleManager!: SceneStyleManager;
 
+    // TODO: saving latest position to avoid firing the callback many timest
+    public latestCallbackIndex: number = 0;
+
     constructor( public scene: THREE.Scene, public callbacks: { [name: string]: any }  ){
         this.sceneHighlights = new SceneHighlights();
         this.sceneStyleManager = new SceneStyleManager();
@@ -31,8 +34,13 @@ export class SceneManager {
     public fire_callback( eventType: 'onHover' | 'onClick', objectType: string, objectName: string, index: number, position: number[] ){
 
         if(eventType in this.callbacks){
-            const meta: any = this.dataset.get_object_meta( objectType, objectName, index );
-            this.callbacks[eventType]( index, objectName, position, meta );
+
+            if( this.latestCallbackIndex !== index ){
+                this.latestCallbackIndex = index;
+                const meta: any = this.dataset.get_object_meta( objectType, objectName, index );
+                this.callbacks[eventType]( index, objectName, position, meta );
+            }
+
         }
 
     }
@@ -71,14 +79,19 @@ export class SceneManager {
         this.dataset = dataset;
     }
 
-    public update( ): void {
+    public update(): void {
 
-        if( this.dataset ){
+        if( this.dataset ){ 
 
             // point clouds
             for (let [key, value] of Object.entries(this.dataset.pointClouds)) {
                 const currentRenderable: Object3D = value.get_renderables();
                 this.scene.add( currentRenderable );
+
+                const box = new THREE.BoxHelper( currentRenderable, '#000000' );
+                box.name = `${key}-boundingbox`
+                this.dataset.boundingBoxes[`${key}-boundingbox`] = box;
+                this.scene.add( box );
             }
 
             // lines

@@ -7,8 +7,9 @@ var VoxelGrid = (function () {
         this.xExtent = xExtent;
         this.yExtent = yExtent;
         this.zExtent = zExtent;
-        this.cellSize = 0.025;
+        this.cellSize = 0.015;
         this.voxelMap = {};
+        this.indexedPointClouds = {};
     }
     VoxelGrid.prototype.update_voxel_grid = function (pointCloudName, points) {
         var _this = this;
@@ -21,18 +22,19 @@ var VoxelGrid = (function () {
             var voxelIndex = "".concat(xIndex, "-").concat(yIndex, "-").concat(zIndex);
             if (!(voxelIndex in _this.voxelMap)) {
                 _this.voxelMap[voxelIndex] = new VoxelCell_1.VoxelCell([_this.xExtent[0] + (xIndex * _this.cellSize), _this.xExtent[0] + ((xIndex + 1) * _this.cellSize)], [_this.yExtent[0] + (yIndex * _this.cellSize), _this.yExtent[0] + ((yIndex + 1) * _this.cellSize)], [_this.zExtent[0] + (zIndex * _this.cellSize), _this.zExtent[0] + ((zIndex + 1) * _this.cellSize)]);
+                if (!(pointCloudName in _this.indexedPointClouds)) {
+                    _this.indexedPointClouds[pointCloudName] = [];
+                }
+                _this.indexedPointClouds[pointCloudName].push(_this.voxelMap[voxelIndex]);
             }
             _this.voxelMap[voxelIndex].index_new_point(pointCloudName, index);
         });
     };
-    VoxelGrid.prototype.get_point_cloud_voxel_cells = function (pointCloudName) {
-        var voxelCells = [];
-        Object.values(this.voxelMap).forEach(function (voxelCell) {
-            if (voxelCell.is_point_cloud_indexed(pointCloudName)) {
-                voxelCells.push(voxelCell);
-            }
-        });
-        return voxelCells;
+    VoxelGrid.prototype.get_point_cloud_voxel_cells = function (pointCloudName, points) {
+        if (points === void 0) { points = []; }
+        if (pointCloudName in this.indexedPointClouds)
+            return this.indexedPointClouds[pointCloudName];
+        return [];
     };
     return VoxelGrid;
 }());
